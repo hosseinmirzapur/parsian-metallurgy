@@ -1,36 +1,36 @@
 "use client"
 
-import { GiTrade } from "react-icons/gi"
+import { GiTestTubes } from "react-icons/gi"
 import { GoGear } from "react-icons/go"
-import { BiSupport } from "react-icons/bi"
-import { CiReceipt } from "react-icons/ci"
+import { SiVitest } from "react-icons/si"
+import { GiDiamondHard } from "react-icons/gi"
 import Card from "../builders/Card"
 
 const WazGood = () => {
 	const wazzGItems = [
 		{
-			icon: GiTrade,
-			title: "خرید و فروش",
+			icon: GiTestTubes,
+			title: "کوانتومتری",
 			description:
-				"امکان معامله هم به صورت حضوری هم به صورت ثبت سفارش آنلاین برای شما موجود است",
+				"پارسیان با دسترسی به آخرین استاندارد های معتبر بین المللی، مطابقت ترکیب شیمیایی بدست آمده با استاندارد های موجود را انجام می دهد",
 		},
 		{
 			icon: GoGear,
 			title: "کنترل کیفیت",
 			description:
-				"کالا به دقت فراوان توسط کارشناسان کنترل کیفیت بازرسی شده و در صورت تایید، مجوز بارگیری صادر می شود",
+				"تمامی قطعاتی که از پارسیان خارج میشوند توسط کارشناسان حرفه ای ما، تست و کنترل شده اند",
 		},
 		{
-			icon: BiSupport,
-			title: "پشتیبانی 24 ساعته",
+			icon: SiVitest,
+			title: "آزمون های متالوگرافی",
 			description:
-				"در 24 ساعت روز و در 7 روز هفته پشتیبانی از کلیه کالا های خود را ارائه میدهیم",
+				"با استفاده از تجهیزات مورد نیاز، این آزمون به منظور بررسی عیوب سطحی و عمقی بر روی قطعات انجام میگیرد",
 		},
 		{
-			icon: CiReceipt,
-			title: "صدور فاکتور رسمی",
+			icon: GiDiamondHard,
+			title: "سختی سنجی",
 			description:
-				"پس ار مشخص شدن ارزش دقیق خرید شما، تسویه نهایی صورت گرفته و فاکتور رسمی خرید شما چاپ و ارسال می گردد",
+				"سختی سنجی يک روش مرجع برای تعيين صحت عمليات حرارتی اعمالی بر روی قطعات است",
 		},
 	]
 	return (
