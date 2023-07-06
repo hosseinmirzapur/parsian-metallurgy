@@ -1,6 +1,7 @@
 import Hero from "./components/sections/Hero"
 import { Metadata } from "next"
 import WazGood from "./components/sections/WazGood"
+import MobilePics from "./components/sections/MobilePics"
 
 export const metadata: Metadata = {
 	title: "متالورژی پارسیان",
@@ -12,6 +13,7 @@ export default function Home() {
 		<div>
 			<Hero />
 			<WazGood />
+			<MobilePics />
 		</div>
 	)
 }
