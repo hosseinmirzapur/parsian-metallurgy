@@ -11,7 +11,7 @@ const Hero = () => {
 			<div className="bg-p-black relative ">
 				<div className="absolute text-center top-[50%] lg:top-[33%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
 					<motion.h1
-						className="text-[15px] md:text-[30px] lg:text-[72px] font-extrabold"
+						className="text-[20px] md:text-[30px] lg:text-[72px] font-extrabold"
 						initial={{
 							opacity: 0,
 						}}
