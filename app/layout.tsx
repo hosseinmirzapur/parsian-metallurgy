@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Footer from "./components/layouts/Footer"
 import Header from "./components/layouts/Header"
 import "./globals.css"
@@ -6,6 +7,11 @@ import { Noto_Sans_Arabic } from "next/font/google"
 const arab = Noto_Sans_Arabic({
 	subsets: ["arabic"],
 })
+
+export const metadata: Metadata = {
+	title: "متالورژی پارسیان",
+	description: "بزرگترین ",
+}
 
 export default function RootLayout({
 	children,
