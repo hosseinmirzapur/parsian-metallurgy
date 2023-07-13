@@ -2,46 +2,46 @@
 
 import Image from "next/image"
 import Typewriter from "typewriter-effect"
-import HeroImage from "../../../public/hero.jpg"
+import HeroImage from "../../../public/hero3.jpg"
 import { motion } from "framer-motion"
 
 const Hero = () => {
 	return (
-		<>
-			<div className="bg-p-black relative ">
-				<div className="absolute text-center top-[50%] lg:top-[33%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-					<motion.h1
-						className="text-[20px] md:text-[30px] lg:text-[72px] font-extrabold"
-						initial={{
-							opacity: 0,
-						}}
-						whileInView={{
-							opacity: 1,
-							animationDuration: "1s",
-						}}>
-						مرکز متالورژی پارسیان
-					</motion.h1>
+		<div className="bg-p-black relative">
+			<div className="absolute text-center top-[50%] lg:top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full">
+				<motion.h1
+					className="text-[20px] md:text-[30px] lg:text-[72px] font-extrabold"
+					initial={{
+						opacity: 0,
+					}}
+					whileInView={{
+						opacity: 1,
+						animationDuration: "1s",
+					}}>
+					مرکز متالورژی پارسیان
+				</motion.h1>
 
-					<div
-						className="text-center text-p-white text-sm lg:text-xl mt-10 lg:mt-20 lg:font-bold"
-						dir="rtl">
-						<Typewriter
-							options={{
-								strings: [
-									"پارسیان، بزرگ ترین مرکز کنترل کیفیت قطعات فلزی در ایران",
-									"اعتماد شما، دلیل انگیزه و اعتبار ماست",
-									"به مدیریت مهندس محمدرضا همافر، مدیر تولید کارخانه فولادریزان",
-								],
-								autoStart: true,
-								loop: true,
-								delay: 75,
-							}}
-						/>
-					</div>
+				<div
+					className="text-center text-p-white text-sm lg:text-xl mt-10 lg:mt-20 lg:font-bold w-9/12 mx-auto"
+					dir="rtl">
+					<Typewriter
+						options={{
+							strings: [
+								"پارسیان، بزرگ ترین مرکز کنترل کیفیت قطعات فلزی در ایران",
+								"اعتماد شما، دلیل انگیزه و اعتبار ماست",
+								"به مدیریت مهندس محمدرضا همافر، مدیر تولید کارخانه فولادریزان",
+							],
+							autoStart: true,
+							loop: true,
+							delay: 75,
+						}}
+					/>
 				</div>
-				<Image src={HeroImage} alt="hero" className="h-[80%]" />
 			</div>
-		</>
+			<div className="flex items-center justify-center opacity-30 pt-5 w-[90%] mx-auto">
+				<Image src={HeroImage} alt="hero" className="rounded-xl" />
+			</div>
+		</div>
 	)
 }
 
