@@ -1,5 +1,6 @@
 "use client"
 
+// ** Components
 import Mobile from "../builders/Mobile"
 
 const MobilePics = () => {
@@ -11,19 +12,18 @@ const MobilePics = () => {
 
 			<div
 				className="
-                flex
-                flex-col
-                lg:flex-row
-                gap-4
-                items-center
-                justify-center
-                
-            "
+					flex
+					flex-col
+					lg:flex-row
+					gap-4
+					items-center
+					justify-center
+            	"
 				dir="rtl">
 				<Mobile
 					image="/xrf1.jpg"
 					description="TT- X7000 Handheld Portable XRF Mineral Ore Analyzer"
-					more={["آزمون غیر مخرب با دقت بالا", ""]}
+					more={["آزمون غیر مخرب با دقت بالا"]}
 				/>
 				<Mobile
 					image="/xrf2.jpg"

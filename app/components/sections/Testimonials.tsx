@@ -36,7 +36,7 @@ const testimonialItems: WebsiteSliderProps[] = [
 
 const Testimonials = () => {
 	return (
-		<div className="flex flex-col gap-16 h-[600px] pt-20 pb-20">
+		<div className="flex flex-col gap-16 h-[600px] pt-20 pb-20 relative">
 			<div className="flex justify-center items-center">
 				<LuQuote size={80} className="text-p-white" />
 			</div>

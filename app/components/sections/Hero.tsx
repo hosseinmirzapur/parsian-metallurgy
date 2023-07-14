@@ -2,13 +2,24 @@
 
 import Image from "next/image"
 import Typewriter from "typewriter-effect"
-import HeroImage from "../../../public/hero3.jpg"
+// import HeroImage from "../../../public/ultra-nice.jpg"
+import HeroImage from "../../../public/ultra-nice.jpg"
 import { motion } from "framer-motion"
 
 const Hero = () => {
 	return (
 		<div className="bg-p-black relative">
-			<div className="absolute text-center top-[50%] lg:top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full">
+			<div
+				className="
+					absolute
+					text-center
+					top-[50%]
+					lg:top-[50%]
+					left-[50%]
+					translate-x-[-50%]
+					translate-y-[-50%]
+					w-full
+				">
 				<motion.h1
 					className="text-[20px] md:text-[30px] lg:text-[72px] font-extrabold"
 					initial={{
@@ -22,7 +33,17 @@ const Hero = () => {
 				</motion.h1>
 
 				<div
-					className="text-center text-p-white text-sm lg:text-xl mt-10 lg:mt-20 lg:font-bold w-9/12 mx-auto"
+					className="
+						text-center
+						text-p-white
+						text-sm
+						lg:text-xl
+						mt-10
+						lg:mt-20
+						lg:font-bold
+						w-9/12
+						mx-auto
+					"
 					dir="rtl">
 					<Typewriter
 						options={{
@@ -38,8 +59,8 @@ const Hero = () => {
 					/>
 				</div>
 			</div>
-			<div className="flex items-center justify-center opacity-30 pt-5 w-[90%] mx-auto">
-				<Image src={HeroImage} alt="hero" className="rounded-xl" />
+			<div className="flex items-center justify-center">
+				<Image src={HeroImage} alt="hero" className="opacity-30" />
 			</div>
 		</div>
 	)
