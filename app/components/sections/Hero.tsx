@@ -59,8 +59,8 @@ const Hero = () => {
 					/>
 				</div>
 			</div>
-			<div className="flex items-center justify-center">
-				<Image src={HeroImage} alt="hero" className="opacity-30" />
+			<div className="flex items-center justify-center w-[96%] mx-auto pt-10">
+				<Image src={HeroImage} alt="hero" className="opacity-30 rounded-lg" />
 			</div>
 		</div>
 	)
