@@ -67,7 +67,7 @@ const MobilePics = () => {
 					loop
 					className="w-11/12 mx-auto"
 					scrollbar={{ draggable: true, hide: true }}
-					onSlideChange={(e) => setText(images[e.activeIndex]?.text)}>
+					onSlideChange={(e) => setText(images[e.realIndex]?.text)}>
 					{images.map((image, index) => (
 						<SwiperSlide key={index} className="flex flex-row py-10">
 							<div className="flex items-center justify-center">
