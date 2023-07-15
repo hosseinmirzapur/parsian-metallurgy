@@ -1,6 +1,6 @@
 import Hero from "./components/sections/Hero"
 import WazGood from "./components/sections/WazGood"
-import MobilePics from "./components/sections/MobilePics"
+import MobilePics from "./components/sections/ImacPic"
 import Testimonials from "./components/sections/Testimonials"
 import MapContainer from "./components/sections/MapContainer"
 

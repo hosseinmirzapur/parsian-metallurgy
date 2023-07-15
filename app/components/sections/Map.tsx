@@ -33,20 +33,14 @@ const Map = () => {
 		<MapContainer
 			center={[mapProps.center.lat, mapProps.center.lng]}
 			zoom={mapProps.zoom}
-			scrollWheelZoom={false}
+			scrollWheelZoom
+			doubleClickZoom
 			className="h-[400px] w-[75%] lg:w-[600px] mx-auto rounded-lg">
 			<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 			<Marker
 				position={[mapProps.center.lat, mapProps.center.lng]}
 				riseOnHover
 				title="دفتر مرکزی متالورژی پارسیان"
-				interactive
-			/>
-
-			<Marker
-				position={[mapProps.otherCenter.lat, mapProps.otherCenter.lng]}
-				riseOnHover
-				title="دفتر نمایندگی متالورژی پارسیان"
 				interactive
 			/>
 		</MapContainer>

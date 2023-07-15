@@ -14,12 +14,12 @@ const WazGood = () => {
 			description:
 				"پارسیان با دسترسی به آخرین استاندارد های معتبر بین المللی، مطابقت ترکیب شیمیایی بدست آمده با استاندارد های موجود را انجام می دهد",
 		},
-		{
-			icon: GoGear,
-			title: "کنترل کیفیت",
-			description:
-				"تمامی قطعاتی که از پارسیان خارج میشوند توسط کارشناسان حرفه ای ما، تست و کنترل شده اند",
-		},
+		// {
+		// 	icon: GoGear,
+		// 	title: "کنترل کیفیت",
+		// 	description:
+		// 		"تمامی قطعاتی که از پارسیان خارج میشوند توسط کارشناسان حرفه ای ما، تست و کنترل شده اند",
+		// },
 		{
 			icon: SiVitest,
 			title: "آزمون های متالوگرافی",
@@ -39,7 +39,7 @@ const WazGood = () => {
 				در پارسیان چه میگذرد؟
 			</p>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-8 pt-5">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-10 md:gap-14 lg:gap-16 pt-5">
 				{wazzGItems.map((item, index) => (
 					<Card
 						description={item.description}

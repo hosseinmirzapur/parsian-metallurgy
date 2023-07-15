@@ -14,7 +14,7 @@ const MapContainer = () => {
 				<div className="flex justify-start">
 					<Map />
 				</div>
-				<div className="flex flex-col gap-7">
+				<div className="flex flex-col gap-14">
 					<div className="flex flex-col gap-2">
 						<h3
 							className="text-lg font-semibold text-p-black text-right"
@@ -25,19 +25,6 @@ const MapContainer = () => {
 						<p className="text-p-black" dir="rtl">
 							بازار آهن شاد آباد.خیابان 17 شهریور. نرسیده به بلوار طاوس بلوک
 							فروردین. پلاک 6
-						</p>
-					</div>
-
-					<div className="flex flex-col gap-2">
-						<h3
-							className="text-lg font-semibold text-p-black text-right"
-							dir="rtl">
-							دفتر نمایندگی:
-						</h3>
-
-						<p className="text-p-black" dir="rtl">
-							غرب به شرق بزرگراه فتح (جاده قدیم کرج)، نرسیده به میدان شیر
-							پاستوریزه، مجتمع تجاری تهران، شماره 114
 						</p>
 					</div>
 
@@ -62,18 +49,6 @@ const MapContainer = () => {
 
 						<p className="text-p-black" dir="rtl">
 							66672406 - 66672407 - 66672701
-						</p>
-					</div>
-
-					<div className="flex flex-col gap-2">
-						<h3
-							className="text-lg font-semibold text-p-black text-right"
-							dir="rtl">
-							تلفن دفتر نمایندگی:
-						</h3>
-
-						<p className="text-p-black" dir="rtl">
-							66798681 - 66809731
 						</p>
 					</div>
 				</div>
