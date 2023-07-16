@@ -3,6 +3,7 @@ import Footer from "./components/layouts/Footer"
 import Header from "./components/layouts/Header"
 import "./globals.css"
 import { Noto_Sans_Arabic } from "next/font/google"
+import Support from "./components/builders/Support"
 
 const arab = Noto_Sans_Arabic({
 	subsets: ["arabic"],
@@ -23,6 +24,7 @@ export default function RootLayout({
 			<body className={arab.className}>
 				<Header />
 				{children}
+				<Support />
 				<Footer />
 			</body>
 		</html>

@@ -60,7 +60,7 @@ const Hero = () => {
 					/>
 				</div>
 			</div>
-			<div className="flex items-center justify-center w-[96%] mx-auto pt-10">
+			<div className="flex items-center justify-center w-[96%] mx-auto pt-5">
 				<Image src={HeroImage} alt="hero" className="opacity-30 rounded-lg" />
 			</div>
 		</div>
