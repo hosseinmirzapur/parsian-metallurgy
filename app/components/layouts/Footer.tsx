@@ -30,7 +30,7 @@ interface ServiceItem {
 // 	{ name: "درباره ما", url: "/about-us" },
 // ]
 const fastAccessItems: FooterItem[] = [
-	{ name: "سوالات متداول", url: "#" },
+	{ name: "سوالات متداول", url: "/faq" },
 	{ name: "وبلاگ", url: "#" },
 	{ name: "تماس با ما", url: "#" },
 	{ name: "درباره ما", url: "#" },

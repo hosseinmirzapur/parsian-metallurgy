@@ -21,11 +21,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="fa">
-			<body className={arab.className}>
+			<body className={arab.className + " bg-gray-50"}>
 				<Header />
 				{children}
 				<Support />
-				<Footer />
+				<div className="w-full absolute">
+					<Footer />
+				</div>
 			</body>
 		</html>
 	)

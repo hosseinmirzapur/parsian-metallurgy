@@ -48,10 +48,18 @@ const Header = () => {
                         flex-row
                         gap-20
                     ">
-					<p className={anchor().styles}>درباره ما</p>
-					<p className={anchor().styles}>تماس با ما</p>
-					<p className={anchor().styles}>وبلاگ</p>
-					<p className={anchor().styles}>سوالات متداول</p>
+					<Link href={"#"} className={anchor().styles + " text-p-white"}>
+						درباره ما
+					</Link>
+					<Link href={"#"} className={anchor().styles + " text-p-white"}>
+						تماس با ما
+					</Link>
+					<Link href={"#"} className={anchor().styles + " text-p-white"}>
+						وبلاگ
+					</Link>
+					<Link href={"/faq"} className={anchor().styles + " text-p-white"}>
+						سوالات متداول
+					</Link>
 				</div>
 
 				{/* Login/Signup or Profile Pic */}
