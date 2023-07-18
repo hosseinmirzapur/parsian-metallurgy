@@ -51,7 +51,9 @@ const Header = () => {
 					<Link href={"#"} className={anchor().styles + " text-p-white"}>
 						درباره ما
 					</Link>
-					<Link href={"#"} className={anchor().styles + " text-p-white"}>
+					<Link
+						href={"/contact-us"}
+						className={anchor().styles + " text-p-white"}>
 						تماس با ما
 					</Link>
 					<Link href={"#"} className={anchor().styles + " text-p-white"}>

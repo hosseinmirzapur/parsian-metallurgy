@@ -32,7 +32,7 @@ interface ServiceItem {
 const fastAccessItems: FooterItem[] = [
 	{ name: "سوالات متداول", url: "/faq" },
 	{ name: "وبلاگ", url: "#" },
-	{ name: "تماس با ما", url: "#" },
+	{ name: "تماس با ما", url: "/contact-us" },
 	{ name: "درباره ما", url: "#" },
 ]
 
