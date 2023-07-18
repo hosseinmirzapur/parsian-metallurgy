@@ -200,7 +200,9 @@ const ContactUsContainer = () => {
 				</div>
 				<div
 					className="flex gap-5 cursor-pointer rounded-xl shadow-lg p-5 hover:shadow-2xl transition-all"
-					onClick={() => router.push(`mailto:${contactUsInfo.email}`)}>
+					onClick={() =>
+						window.open(`mailto:${contactUsInfo.email}`, "_blank")
+					}>
 					<AiOutlineMail size={30} />
 					{contactUsInfo.email}
 				</div>
@@ -213,7 +215,7 @@ const ContactUsContainer = () => {
 							<Button
 								color="teal"
 								key={index}
-								onClick={() => router.push(`tel:${pNum}`)}>
+								onClick={() => window.open(`tel:${pNum}`, "_blank")}>
 								{pNum}
 							</Button>
 						))}
