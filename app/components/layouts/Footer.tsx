@@ -33,7 +33,7 @@ const fastAccessItems: FooterItem[] = [
 	{ name: "سوالات متداول", url: "/faq" },
 	{ name: "وبلاگ", url: "#" },
 	{ name: "تماس با ما", url: "/contact-us" },
-	{ name: "درباره ما", url: "#" },
+	{ name: "درباره ما", url: "/about-us" },
 ]
 
 const socialMediaItems: SocialMediaItem[] = [

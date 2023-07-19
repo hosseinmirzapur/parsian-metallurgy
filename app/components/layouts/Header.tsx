@@ -48,7 +48,9 @@ const Header = () => {
                         flex-row
                         gap-20
                     ">
-					<Link href={"#"} className={anchor().styles + " text-p-white"}>
+					<Link
+						href={"/about-us"}
+						className={anchor().styles + " text-p-white"}>
 						درباره ما
 					</Link>
 					<Link

@@ -9,7 +9,7 @@ import Container from "../components/builders/Container"
 import { useState } from "react"
 import { anchor } from "../utils/css"
 import Image from "next/image"
-import FaqImage from "../../public/faq.svg"
+import FaqImage from "../../public/contact-us.svg"
 
 const faqItems: AccordionItem[] = [
 	{
@@ -55,9 +55,8 @@ const FaqContainer = () => {
 								onClick={() => handleOpen(index)}
 								className={`
                                 text-p-white
-                                text-[12px]
-                                md:text-[13px]
-                                lg:text-[16px]
+								font-normal
+								text-base
                                 ${anchor().styles}
                                 py-4
                                 px-1
