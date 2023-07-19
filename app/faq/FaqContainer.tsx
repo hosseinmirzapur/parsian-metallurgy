@@ -18,7 +18,7 @@ const faqItems: AccordionItem[] = [
 			"شاخه‌ای از علم مواد است که به شناخت و استخراج فلزات و فناوری‌های کار با فلزات می‌پردازد. این علم تفکیک مواد معدنی از سنگ معدن آن‌ها، ذوب، تصفیه و تولید شمش، بهبود خواص و تهیهٔ آلیاژها و فن کار بر روی فلزات و شکل‌دهی آن‌ها را دربر می‌گیرد",
 	},
 	{
-		question: "تعرفه خدمات مختلف در پارسیان به چه صورت است؟",
+		question: "تعرفه خدمات در پارسیان به چه صورت است؟",
 		answer:
 			"هر فعالیتی که در پارسیان صورت می پذیرد، زمان و ابزار و نیروی حرفه ای خاص خود را دارد و با توجه به نوع درخواست شما قیمت در بازه مشخصی تغییر میکند",
 	},
@@ -54,13 +54,15 @@ const FaqContainer = () => {
 								dir="rtl"
 								onClick={() => handleOpen(index)}
 								className={`
-                                text-p-white
-								font-normal
-								text-base
-                                ${anchor().styles}
-                                py-4
-                                px-1
-                            `}>
+									text-p-white
+									font-[]
+									font-normal
+									text-sm
+									md:text-base
+									${anchor().styles}
+									py-4
+									px-1
+                            	`}>
 								{faq.question}
 							</AccordionHeader>
 							<AccordionBody>

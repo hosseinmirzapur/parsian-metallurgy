@@ -1,19 +1,39 @@
 "use client"
 
+import { Button } from "@material-tailwind/react"
 import dynamic from "next/dynamic"
+import { useRouter } from "next/navigation"
 import { useMemo } from "react"
 
 const MapContainer = () => {
+	// ** Special Component
 	const Map = useMemo(() => dynamic(() => import("./Map"), { ssr: false }), [])
+
+	// ** Variables
+	const router = useRouter()
+
+	// ** Functions
+	const handleGeo = () => {
+		router.push(
+			`https://www.google.com/maps/search/?api=1&query=35.66912628969876,51.31956858095572`,
+		)
+	}
+
 	return (
 		<div className="pt-20 pb-20 bg-gray-200">
 			<p className="text-center pb-10 text-2xl font-bold text-p-black">
 				با ما در ارتباط باشید
 			</p>
 			<div className="flex justify-between flex-col lg:flex-row w-11/12 mx-auto gap-5 pt-5">
-				<div className="flex justify-start">
+				<div className="flex flex-col gap-10 justify-start">
 					<Map />
+					<div className="flex items-center justify-center">
+						<Button color="red" onClick={handleGeo}>
+							مسیریابی
+						</Button>
+					</div>
 				</div>
+
 				<div className="flex flex-col gap-14">
 					<div className="flex flex-col gap-2">
 						<h3
