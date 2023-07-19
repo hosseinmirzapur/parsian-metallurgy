@@ -44,7 +44,7 @@ const AboutUsContainer = () => {
 						src={CertificateImage}
 						alt="about us"
 						draggable={false}
-						className="w-[200px] md:w-[300px] lg:w-[400px]"
+						className="w-[200px] lg:w-[400px]"
 					/>
 					<h3
 						className="
@@ -82,7 +82,7 @@ const AboutUsContainer = () => {
 					dir="rtl"
 					initial={{ opacity: 0, x: -100, visibility: "hidden" }}
 					whileInView={{ opacity: 1, x: 0, visibility: "visible" }}
-					viewport={{ once: true }}
+					viewport={{ once: false }}
 					transition={{
 						duration: 1,
 					}}
@@ -134,7 +134,7 @@ const AboutUsContainer = () => {
 						src={FactoryImage}
 						alt="factory"
 						draggable={false}
-						className="w-[200px] md:w-[300px] lg:w-[400px]"
+						className="w-[200px] lg:w-[400px]"
 					/>
 				</motion.div>
 
@@ -142,7 +142,7 @@ const AboutUsContainer = () => {
 					dir="rtl"
 					initial={{ opacity: 0, x: 100, visibility: "hidden" }}
 					whileInView={{ opacity: 1, x: 0, visibility: "visible" }}
-					viewport={{ once: true }}
+					viewport={{ once: false }}
 					transition={{
 						duration: 1,
 					}}
@@ -163,7 +163,7 @@ const AboutUsContainer = () => {
 						src={ManagerImage}
 						alt="manager-image"
 						draggable={false}
-						className="w-[200px] md:w-[300px] lg:w-[400px]"
+						className="w-[200px] lg:w-[400px]"
 					/>
 					<h3
 						className="
