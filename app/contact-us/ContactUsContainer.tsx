@@ -188,7 +188,7 @@ const ContactUsContainer = () => {
                     mt-20
                 ">
 				<div
-					className="flex flex-col gap-2 cursor-pointer rounded-xl shadow-lg p-2 hover:shadow-2xl transition-all"
+					className="flex flex-col gap-2 cursor-pointer rounded-xl shadow-lg p-2 hover:shadow-2xl transition-all lg:hidden"
 					onClick={handleGeo}>
 					<div className="flex gap-5">
 						<GoLocation size={30} />

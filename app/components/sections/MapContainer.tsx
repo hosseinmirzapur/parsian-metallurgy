@@ -25,7 +25,7 @@ const MapContainer = () => {
 			<div className="flex justify-between flex-col lg:flex-row w-11/12 mx-auto gap-5 pt-5">
 				<div className="flex flex-col gap-10 justify-start">
 					<Map />
-					<div className="flex items-center justify-center">
+					<div className="flex items-center justify-center lg:hidden">
 						<Button color="red" onClick={handleGeo}>
 							مسیریابی
 						</Button>
