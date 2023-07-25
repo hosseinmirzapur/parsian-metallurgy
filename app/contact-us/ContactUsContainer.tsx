@@ -67,9 +67,11 @@ const ContactUsContainer = () => {
 	}
 
 	const handleGeo = () => {
-		router.push(
-			`https://www.google.com/maps/search/?api=1&query=35.66912628969876,51.31956858095572`,
-		)
+		const a = document.createElement("a")
+		a.href = "geo:35.66912628969876,51.31956858095572;u=35"
+		a.target = "_blank"
+		a.click()
+		a.remove()
 	}
 
 	return (

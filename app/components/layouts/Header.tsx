@@ -1,13 +1,20 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import { AiOutlineMenu } from "react-icons/ai"
 import { MdOutlineAccountCircle } from "react-icons/md"
-
 import { anchor } from "@/app/utils/css"
 import Link from "next/link"
+import LoginModal from "../builders/LoginModal"
 
 const Header = () => {
+	const [loginModal, setLoginModal] = useState(true)
+	const [registerModal, setRegisterModal] = useState(false)
+
+	const toggleLoginModal = () => setLoginModal(!loginModal)
+	const toggleRegisterModal = () => setRegisterModal(!registerModal)
+
 	return (
 		<div className="flex bg-p-black h-20 items-center">
 			<div
@@ -73,6 +80,8 @@ const Header = () => {
 					<h5 className={anchor().styles}>ثبت نام</h5>
 					<MdOutlineAccountCircle className="text-p-white" size={27} />
 				</div>
+
+				{/* <LoginModal isOpen={loginModal} toggleModal={toggleLoginModal} /> */}
 			</div>
 		</div>
 	)

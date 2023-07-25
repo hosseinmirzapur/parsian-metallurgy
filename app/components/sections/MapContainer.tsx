@@ -2,21 +2,19 @@
 
 import { Button } from "@material-tailwind/react"
 import dynamic from "next/dynamic"
-import { useRouter } from "next/navigation"
 import { useMemo } from "react"
 
 const MapContainer = () => {
 	// ** Special Component
 	const Map = useMemo(() => dynamic(() => import("./Map"), { ssr: false }), [])
 
-	// ** Variables
-	const router = useRouter()
-
 	// ** Functions
 	const handleGeo = () => {
-		router.push(
-			`https://www.google.com/maps/search/?api=1&query=35.66912628969876,51.31956858095572`,
-		)
+		const a = document.createElement("a")
+		a.href = "geo:35.66912628969876,51.31956858095572;u=35"
+		a.target = "_blank"
+		a.click()
+		a.remove()
 	}
 
 	return (
