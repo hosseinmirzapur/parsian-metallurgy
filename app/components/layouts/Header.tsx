@@ -7,9 +7,10 @@ import { MdOutlineAccountCircle } from "react-icons/md"
 import { anchor } from "@/app/utils/css"
 import Link from "next/link"
 import LoginModal from "../builders/LoginModal"
+import RegisterModal from "../builders/RegisterModal"
 
 const Header = () => {
-	const [loginModal, setLoginModal] = useState(true)
+	const [loginModal, setLoginModal] = useState(false)
 	const [registerModal, setRegisterModal] = useState(false)
 
 	const toggleLoginModal = () => setLoginModal(!loginModal)
@@ -75,13 +76,21 @@ const Header = () => {
 
 				{/* Login/Signup or Profile Pic */}
 				<div className="hidden md:flex text-xs lg:text-base gap-2">
-					<h5 className={anchor().styles}>ورود</h5>
+					<h5 className={anchor().styles} onClick={toggleLoginModal}>
+						ورود
+					</h5>
 					<h5>|</h5>
-					<h5 className={anchor().styles}>ثبت نام</h5>
+					<h5 className={anchor().styles} onClick={toggleRegisterModal}>
+						ثبت نام
+					</h5>
 					<MdOutlineAccountCircle className="text-p-white" size={27} />
 				</div>
 
-				{/* <LoginModal isOpen={loginModal} toggleModal={toggleLoginModal} /> */}
+				<LoginModal isOpen={loginModal} toggleModal={toggleLoginModal} />
+				<RegisterModal
+					isOpen={registerModal}
+					toggleModal={toggleRegisterModal}
+				/>
 			</div>
 		</div>
 	)

@@ -16,35 +16,43 @@ import {
 // react icons
 import { IoCloseOutline } from "react-icons/io5"
 
-// server utils
 import server, { handleResponse } from "@/app/utils/api/server"
+import toast from "react-hot-toast"
 
-// redux stuff
-import { login } from "@/redux/features/auth-slice"
-import { AppDispatch } from "@/redux/store"
-import { useDispatch } from "react-redux"
-// import { useAppSelector } from "@/redux/store"
+// server utils
 
-interface LoginModalProps {
+interface RegisterModalProps {
 	isOpen: boolean
 	toggleModal: () => void
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({
+	isOpen,
+	toggleModal,
+}) => {
 	// ** Variables
 	const [mobile, setMobile] = useState("")
 	const [password, setPassword] = useState("")
+	const [confirmPass, setConfirmPass] = useState("")
+	const [name, setName] = useState("")
 	const [errMsg, setErrMsg] = useState("")
 	const [loading, setLoading] = useState(false)
-	const dispatch = useDispatch<AppDispatch>()
 
 	// ** Functions
 	const fillMobile = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setMobile(e.target.value)
 	const fillPassword = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setPassword(e.target.value)
+	const fillConfirmPass = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setConfirmPass(e.target.value)
+	const fillName = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setName(e.target.value)
 
 	const validateFormData = (): boolean => {
+		if (name === "") {
+			setErrMsg("وارد کردن نام کامل الزامیست")
+			return false
+		}
 		if (mobile === "") {
 			setErrMsg("وارد کردن شماره موبایل الزامیست")
 			return false
@@ -66,22 +74,25 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 			setErrMsg("رمز عبور باید بیشتر از 8 رقم داشته باشد")
 			return false
 		}
+		if (confirmPass != password) {
+			setErrMsg("رمز عبور و تکرار آن با هم یکسان نیستند")
+			return false
+		}
+
 		return true
 	}
 
-	const handleLogin = async () => {
+	const handleRegister = async () => {
 		let isValid = validateFormData()
 		if (!isValid) {
 			return
 		}
-
 		setLoading(true)
 		await server
-			.post("/user/login", { mobile, password })
-			.then((res) => {
-				const token: string = res.data.token
-				dispatch(login(token))
+			.post("/user/register", { mobile, password, name })
+			.then(() => {
 				toggleModal()
+				toast("ثبت نام شما موفقیت آمیز بود، اکنون میتوانید وارد شوید")
 			})
 			.catch((err) => {
 				let errText: string = handleResponse(err, "text")
@@ -94,6 +105,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 		if (!isOpen) {
 			setMobile("")
 			setPassword("")
+			setName("")
+			setConfirmPass("")
 			setErrMsg("")
 			setLoading(false)
 		}
@@ -107,7 +120,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 			size="sm"
 			className="bg-p-black">
 			<DialogHeader className="flex items-center justify-center relative">
-				<p className="text-center font-light text-xl">ورود</p>
+				<p className="text-center font-light text-xl">ثبت نام</p>
 				<IoCloseOutline
 					onClick={toggleModal}
 					className="
@@ -127,6 +140,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 			<DialogBody>
 				<div className="w-7/12 mx-auto flex flex-col gap-4">
 					<Input
+						type="text"
+						label="نام کامل"
+						className="opacity-75 bg-gray-800 text-white"
+						autoComplete="off"
+						onChange={fillName}
+						dir="rtl"
+					/>
+					<Input
 						type="number"
 						label="شماره موبایل"
 						className="opacity-75 bg-gray-800 text-white"
@@ -143,14 +164,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 						onChange={fillPassword}
 						dir="ltr"
 					/>
+
+					<Input
+						type="password"
+						label="تکرار رمز عبور"
+						className="opacity-75 bg-gray-800 text-white"
+						autoComplete="off"
+						onChange={fillConfirmPass}
+						dir="ltr"
+					/>
 				</div>
 				{errMsg !== "" && (
 					<p className="text-red-500 text-center font-medium mt-3">{errMsg}</p>
 				)}
 			</DialogBody>
 			<DialogFooter className="flex items-center justify-center gap-10">
-				<Button color="blue" size="md" onClick={handleLogin} disabled={loading}>
-					{loading ? <Spinner className="h-3 w-3" /> : "ورود"}
+				<Button
+					color="blue"
+					size="md"
+					onClick={handleRegister}
+					disabled={loading}>
+					{loading ? <Spinner className="h-3 w-3" /> : "ثبت نام"}
 				</Button>
 				<Button color="red" size="md" onClick={toggleModal}>
 					لغو
@@ -160,4 +194,4 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 	)
 }
 
-export default LoginModal
+export default RegisterModal

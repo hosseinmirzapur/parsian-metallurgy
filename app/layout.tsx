@@ -4,6 +4,8 @@ import Header from "./components/layouts/Header"
 import "./globals.css"
 import { Noto_Sans_Arabic } from "next/font/google"
 import Support from "./components/builders/Support"
+import Toast from "./components/builders/Toast"
+import ReduxProvider from "@/redux/provider"
 
 const arab = Noto_Sans_Arabic({
 	subsets: ["arabic"],
@@ -22,8 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="fa">
 			<body className={arab.className + " bg-gray-50"}>
+				<Toast />
+
 				<Header />
-				{children}
+				<ReduxProvider>{children}</ReduxProvider>
 				<Support />
 				<div className="w-full absolute">
 					<Footer />
