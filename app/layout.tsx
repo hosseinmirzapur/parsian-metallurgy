@@ -6,6 +6,7 @@ import { Noto_Sans_Arabic } from "next/font/google"
 import Support from "./components/builders/Support"
 import Toast from "./components/builders/Toast"
 import ReduxProvider from "@/redux/provider"
+import { ThemeProvider } from "@material-tailwind/react"
 
 const arab = Noto_Sans_Arabic({
 	subsets: ["arabic"],
@@ -24,14 +25,15 @@ export default function RootLayout({
 	return (
 		<html lang="fa">
 			<body className={arab.className + " bg-gray-50"}>
-				<Toast />
-
-				<Header />
-				<ReduxProvider>{children}</ReduxProvider>
-				<Support />
-				<div className="w-full absolute">
-					<Footer />
-				</div>
+				<ReduxProvider>
+					<Toast />
+					<Header />
+					{children}
+					<Support />
+					<div className="w-full absolute">
+						<Footer />
+					</div>
+				</ReduxProvider>
 			</body>
 		</html>
 	)

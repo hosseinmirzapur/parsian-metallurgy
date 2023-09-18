@@ -24,11 +24,13 @@ import toast from "react-hot-toast"
 interface RegisterModalProps {
 	isOpen: boolean
 	toggleModal: () => void
+	toggleLoginModal: () => void
 }
 
 const RegisterModal: React.FC<RegisterModalProps> = ({
 	isOpen,
 	toggleModal,
+	toggleLoginModal,
 }) => {
 	// ** Variables
 	const [mobile, setMobile] = useState("")
@@ -137,8 +139,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 					size={30}
 				/>
 			</DialogHeader>
-			<DialogBody>
-				<div className="w-7/12 mx-auto flex flex-col gap-4">
+			<DialogBody className="flex flex-col justify-center items-center">
+				<div className="flex flex-col md:w-7/12 mx-auto gap-4">
 					<Input
 						type="text"
 						label="نام کامل"
@@ -190,6 +192,17 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 					لغو
 				</Button>
 			</DialogFooter>
+			<div className="flex flex-col items-center gap-2 pb-3">
+				<p>قبلا حساب کاربری ایجاد کرده اید؟</p>
+				<p
+					className="text-blue-500 cursor-pointer font-medium"
+					onClick={() => {
+						toggleModal()
+						toggleLoginModal()
+					}}>
+					وارد شوید
+				</p>
+			</div>
 		</Dialog>
 	)
 }

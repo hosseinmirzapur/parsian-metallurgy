@@ -21,6 +21,7 @@ export const auth = createSlice({
 	initialState,
 	reducers: {
 		logout: () => {
+			localStorage.clear()
 			return initialState
 		},
 		login: (state, action: PayloadAction<string>) => {

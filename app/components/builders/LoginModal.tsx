@@ -23,14 +23,18 @@ import server, { handleResponse } from "@/app/utils/api/server"
 import { login } from "@/redux/features/auth-slice"
 import { AppDispatch } from "@/redux/store"
 import { useDispatch } from "react-redux"
-// import { useAppSelector } from "@/redux/store"
 
 interface LoginModalProps {
 	isOpen: boolean
 	toggleModal: () => void
+	toggleRegisterModal: () => void
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
+const LoginModal: React.FC<LoginModalProps> = ({
+	isOpen,
+	toggleModal,
+	toggleRegisterModal,
+}) => {
 	// ** Variables
 	const [mobile, setMobile] = useState("")
 	const [password, setPassword] = useState("")
@@ -124,8 +128,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 					size={30}
 				/>
 			</DialogHeader>
-			<DialogBody>
-				<div className="w-7/12 mx-auto flex flex-col gap-4">
+			<DialogBody className="flex flex-col justify-center items-center">
+				<div className="flex flex-col md:w-7/12 mx-auto gap-4">
 					<Input
 						type="number"
 						label="شماره موبایل"
@@ -156,6 +160,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, toggleModal }) => {
 					لغو
 				</Button>
 			</DialogFooter>
+			<div className="flex flex-col items-center gap-2 pb-3">
+				<p>حساب کاربری ندارید؟</p>
+				<p
+					className="text-blue-500 cursor-pointer font-medium"
+					onClick={() => {
+						toggleModal()
+						toggleRegisterModal()
+					}}>
+					ثبت نام کنید
+				</p>
+			</div>
 		</Dialog>
 	)
 }
