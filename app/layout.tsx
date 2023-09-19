@@ -6,7 +6,6 @@ import { Noto_Sans_Arabic } from "next/font/google"
 import Support from "./components/builders/Support"
 import Toast from "./components/builders/Toast"
 import ReduxProvider from "@/redux/provider"
-import { ThemeProvider } from "@material-tailwind/react"
 
 const arab = Noto_Sans_Arabic({
 	subsets: ["arabic"],

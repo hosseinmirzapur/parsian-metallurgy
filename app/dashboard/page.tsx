@@ -1,5 +1,7 @@
+import DashboardContainer from "./DashboardContainer"
+
 const DashboardPage = () => {
-	return <div>page</div>
+	return <DashboardContainer />
 }
 
 export default DashboardPage

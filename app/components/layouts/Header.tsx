@@ -166,15 +166,24 @@ const Header = () => {
 							<MenuHandler>
 								<MdOutlineAccountCircle
 									className={"text-p-white " + anchor().styles}
-									size={27}
+									size={32}
 								/>
 							</MenuHandler>
 
-							<MenuList dir="rtl">
-								<Link href={"/dashboard"}>
-									<MenuItem>داشبورد</MenuItem>
+							<MenuList
+								dir="rtl"
+								className="bg-gray-800 border-p-black shadow-lg">
+								<Link href={"/dashboard"} className="text-p-white">
+									<MenuItem className="text-white font-semibold">
+										داشبورد
+									</MenuItem>
 								</Link>
-								<MenuItem onClick={() => dispatch(logout())}>خروج</MenuItem>
+								<hr />
+								<MenuItem
+									className="text-p-white font-semibold"
+									onClick={() => dispatch(logout())}>
+									خروج
+								</MenuItem>
 							</MenuList>
 						</Menu>
 					</div>
