@@ -13,6 +13,7 @@ import { ImProfile } from "react-icons/im"
 import OrdersTable from "./OrdersTable"
 import UserProfile from "./UserProfile"
 import { Order, Profile } from "@/app/dashboard/DashboardContainer"
+import FastAccess from "./FastAccess"
 
 interface TabData {
 	label: string
@@ -54,7 +55,12 @@ const Tab: React.FC<TabProps> = ({ orders, userProfile }) => {
 			<TabsBody>
 				{tabData.map(({ value }, index) => (
 					<TabPanel key={index} value={value}>
-						{value == "orders" && <OrdersTable orders={orders} key={index} />}
+						{value === "orders" && (
+							<>
+								<OrdersTable orders={orders} key={index} />
+								<FastAccess />
+							</>
+						)}
 
 						{value === "profile" && (
 							<UserProfile profile={userProfile} key={index} />

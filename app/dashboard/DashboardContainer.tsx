@@ -2,6 +2,7 @@
 
 // Main imports
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 // ** Components
 import Tab from "../components/sections/dashboard/Tab"
@@ -14,21 +15,44 @@ export interface Order {
 	mobile: string
 	customer_name?: string
 	requester_name?: string
-	status: string
+	result_destination: string
+	status: boolean
 }
 
-export interface Profile {}
+export interface Profile {
+	mobile: string
+	name: string
+	status: string
+	orders_count: string | number
+	registered_at: string
+}
 
 const DashboardContainer = () => {
 	// ** Variables
 	const [orders, setOrders] = useState<Order[]>([])
-	const [profile, setProfile] = useState<Profile>({})
+	const [profile, setProfile] = useState<Profile>({
+		mobile: "",
+		name: "",
+		orders_count: 0,
+		status: "",
+		registered_at: "",
+	})
 	const selector = useAppSelector((state) => state.persistedReducer.value)
+	const router = useRouter()
 
 	// ** Functions
 	const fillOrders = (orders: Order[]) => setOrders(orders)
+	const fillProfile = (profile: Profile) => setProfile(profile)
 
 	// ** UseEffects
+
+	useEffect(() => {
+		if (!selector.loggedIn) {
+			router.push("/")
+			return
+		}
+	}, [])
+
 	useEffect(() => {
 		server
 			.get("/user/orders", {
@@ -49,7 +73,10 @@ const DashboardContainer = () => {
 					Authorization: `Bearer ${selector.token}`,
 				},
 			})
-			.then(({ data }) => console.log(data))
+			.then(({ data }) => {
+				const fillable = data.data
+				fillProfile(fillable)
+			})
 			.catch((err) => handleResponse(err, "toast"))
 	}, [])
 

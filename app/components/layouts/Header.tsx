@@ -4,6 +4,7 @@ import { useState } from "react"
 
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import { AiOutlineMenu } from "react-icons/ai"
 import { FaPeopleRoof } from "react-icons/fa6"
@@ -29,6 +30,7 @@ const Header = () => {
 	const [loginModal, setLoginModal] = useState(false)
 	const [registerModal, setRegisterModal] = useState(false)
 	const [sidebar, setSidebar] = useState(false)
+	const router = useRouter()
 
 	// ** Redux variables
 	const selector = useAppSelector((state) => state.persistedReducer.value)
@@ -181,7 +183,10 @@ const Header = () => {
 								<hr />
 								<MenuItem
 									className="text-p-white font-semibold"
-									onClick={() => dispatch(logout())}>
+									onClick={async () => {
+										await router.push("/")
+										dispatch(logout())
+									}}>
 									خروج
 								</MenuItem>
 							</MenuList>

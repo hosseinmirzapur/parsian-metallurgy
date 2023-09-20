@@ -48,7 +48,15 @@ const Sidebar: React.FC<SidebarProps> = ({ open, items, toggleOpen }) => {
 
 			<List>
 				{items.map((item, index) => (
-					<ListItem key={index} className="gap-4">
+					<ListItem
+						key={index}
+						className="gap-4"
+						onClick={() => {
+							if (item.onClick) {
+								item.onClick()
+							}
+							toggleOpen()
+						}}>
 						{item.icon && (
 							<ListItemPrefix>
 								<item.icon size={24} className="text-p-white" />
@@ -59,16 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, items, toggleOpen }) => {
 								{item.text}
 							</Link>
 						) : (
-							<p
-								className="text-p-white font-medium"
-								onClick={() => {
-									if (item.onClick) {
-										item.onClick()
-										toggleOpen()
-									}
-								}}>
-								{item.text}
-							</p>
+							<p className="text-p-white font-medium">{item.text}</p>
 						)}
 					</ListItem>
 				))}
