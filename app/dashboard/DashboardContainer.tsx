@@ -16,6 +16,7 @@ export interface Order {
 	customer_name?: string
 	requester_name?: string
 	result_destination: string
+	result_email?: string
 	status: boolean
 }
 
@@ -37,23 +38,26 @@ const DashboardContainer = () => {
 		status: "",
 		registered_at: "",
 	})
+	const [orderCreated, setOrderCreated] = useState(false)
+
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 	const router = useRouter()
 
 	// ** Functions
 	const fillOrders = (orders: Order[]) => setOrders(orders)
 	const fillProfile = (profile: Profile) => setProfile(profile)
+	const emitOrderCreate = () => setOrderCreated(!orderCreated)
 
-	// ** UseEffects
-
-	useEffect(() => {
+	const authorize = () => {
 		if (!selector.loggedIn) {
 			router.push("/")
 			return
 		}
-	}, [])
+	}
 
+	// ** UseEffects
 	useEffect(() => {
+		authorize()
 		server
 			.get("/user/orders", {
 				headers: {
@@ -64,9 +68,10 @@ const DashboardContainer = () => {
 			.catch((err) => {
 				handleResponse(err, "toast")
 			})
-	}, [])
+	}, [orderCreated])
 
 	useEffect(() => {
+		authorize()
 		server
 			.get("/user", {
 				headers: {
@@ -82,7 +87,11 @@ const DashboardContainer = () => {
 
 	return (
 		<div dir="rtl" className="mt-5 pb-48 md:px-10">
-			<Tab orders={orders} userProfile={profile} />
+			<Tab
+				orders={orders}
+				userProfile={profile}
+				emitOrderCreate={emitOrderCreate}
+			/>
 		</div>
 	)
 }

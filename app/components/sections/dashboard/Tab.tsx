@@ -14,6 +14,7 @@ import OrdersTable from "./OrdersTable"
 import UserProfile from "./UserProfile"
 import { Order, Profile } from "@/app/dashboard/DashboardContainer"
 import FastAccess from "./FastAccess"
+import { useState } from "react"
 
 interface TabData {
 	label: string
@@ -37,9 +38,16 @@ const tabData: TabData[] = [
 interface TabProps {
 	orders: Order[]
 	userProfile: Profile
+	emitOrderCreate?: () => void
 }
 
-const Tab: React.FC<TabProps> = ({ orders, userProfile }) => {
+const Tab: React.FC<TabProps> = ({ orders, userProfile, emitOrderCreate }) => {
+	// ** Variables
+	const [newOrder, setNewOrder] = useState(false)
+
+	// ** Functions
+	const toggleNewOrder = () => setNewOrder(!newOrder)
+
 	return (
 		<Tabs value={"orders"}>
 			<TabsHeader>
@@ -57,8 +65,14 @@ const Tab: React.FC<TabProps> = ({ orders, userProfile }) => {
 					<TabPanel key={index} value={value}>
 						{value === "orders" && (
 							<>
-								<OrdersTable orders={orders} key={index} />
-								<FastAccess />
+								<OrdersTable
+									orders={orders}
+									key={index}
+									newOrder={newOrder}
+									toggleNewOrder={toggleNewOrder}
+									emitOrderCreate={emitOrderCreate}
+								/>
+								<FastAccess toggleNewOrder={toggleNewOrder} />
 							</>
 						)}
 

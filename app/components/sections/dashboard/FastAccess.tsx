@@ -19,7 +19,11 @@ import { CiLogout } from "react-icons/ci"
 import { useDispatch } from "react-redux"
 import { logout } from "@/redux/features/auth-slice"
 
-const FastAccess = () => {
+interface FastAccessProps {
+	toggleNewOrder: () => void
+}
+
+const FastAccess: React.FC<FastAccessProps> = ({ toggleNewOrder }) => {
 	// ** Variables
 	const dispatch = useDispatch()
 	const router = useRouter()
@@ -40,31 +44,37 @@ const FastAccess = () => {
 					</SpeedDialHandler>
 					<SpeedDialContent>
 						<SpeedDialAction className="h-16 w-16">
-							<VscNewFile className="h-5 w-5" />
-							<Typography color="blue-gray" className="text-xs font-normal">
-								سفارش جدید
-							</Typography>
+							<div
+								onClick={toggleNewOrder}
+								className="flex flex-col items-center justify-center">
+								<VscNewFile className="h-5 w-5" onClick={toggleNewOrder} />
+								<Typography
+									color="black"
+									className="text-xs font-normal"
+									onClick={toggleNewOrder}>
+									سفارش جدید
+								</Typography>
+							</div>
 						</SpeedDialAction>
 						<SpeedDialAction className="h-16 w-16">
-							<AiOutlineHome
-								className="h-5 w-5"
-								onClick={() => router.push("/")}
-							/>
-							<Typography
-								color="blue-gray"
-								className="text-xs font-normal"
+							<div
+								className="flex flex-col items-center justify-center"
 								onClick={() => router.push("/")}>
-								<Link href="/">خانه</Link>
-							</Typography>
+								<AiOutlineHome className="h-5 w-5" />
+								<Typography color="black" className="text-xs font-normal">
+									<Link href="/">خانه</Link>
+								</Typography>
+							</div>
 						</SpeedDialAction>
 						<SpeedDialAction className="h-16 w-16">
-							<CiLogout className="h-5 w-5" onClick={handleLogout} />
-							<Typography
-								color="blue-gray"
-								className="text-xs font-normal"
+							<div
+								className="flex flex-col items-center justify-center"
 								onClick={handleLogout}>
-								خروج
-							</Typography>
+								<CiLogout className="h-5 w-5" />
+								<Typography color="black" className="text-xs font-normal">
+									خروج
+								</Typography>
+							</div>
 						</SpeedDialAction>
 					</SpeedDialContent>
 				</SpeedDial>
