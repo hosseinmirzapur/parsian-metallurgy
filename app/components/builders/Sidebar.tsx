@@ -1,16 +1,14 @@
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+
 import {
 	Drawer,
-	Button,
 	Typography,
-	IconButton,
 	List,
 	ListItem,
 	ListItemPrefix,
-	ListItemSuffix,
-	Chip,
 } from "@material-tailwind/react"
 
-import Link from "next/link"
 import { IconType } from "react-icons/lib"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 
@@ -28,6 +26,8 @@ export interface SidebarItem {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, items, toggleOpen }) => {
+	const router = useRouter()
+
 	return (
 		<Drawer
 			open={open}
@@ -52,8 +52,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, items, toggleOpen }) => {
 						key={index}
 						className="gap-4"
 						onClick={() => {
-							if (item.onClick) {
-								item.onClick()
+							item.onClick?.()
+							if (item.link) {
+								router.push(item.link)
 							}
 							toggleOpen()
 						}}>

@@ -12,6 +12,7 @@ import server, { handleResponse } from "../utils/api/server"
 import { useAppSelector } from "@/redux/store"
 
 export interface Order {
+	id: number | string
 	mobile: string
 	customer_name?: string
 	requester_name?: string
@@ -38,7 +39,7 @@ const DashboardContainer = () => {
 		status: "",
 		registered_at: "",
 	})
-	const [orderCreated, setOrderCreated] = useState(false)
+	const [fired, setFired] = useState(false)
 
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 	const router = useRouter()
@@ -46,7 +47,9 @@ const DashboardContainer = () => {
 	// ** Functions
 	const fillOrders = (orders: Order[]) => setOrders(orders)
 	const fillProfile = (profile: Profile) => setProfile(profile)
-	const emitOrderCreate = () => setOrderCreated(!orderCreated)
+	const emitOrderCreate = () => setFired(!fired)
+	const emitOrderDelete = () => setFired(!fired)
+	const emitOrderUpdate = () => setFired(!fired)
 
 	const authorize = () => {
 		if (!selector.loggedIn) {
@@ -68,7 +71,7 @@ const DashboardContainer = () => {
 			.catch((err) => {
 				handleResponse(err, "toast")
 			})
-	}, [orderCreated])
+	}, [fired])
 
 	useEffect(() => {
 		authorize()
@@ -91,6 +94,8 @@ const DashboardContainer = () => {
 				orders={orders}
 				userProfile={profile}
 				emitOrderCreate={emitOrderCreate}
+				emitOrderDelete={emitOrderDelete}
+				emitOrderUpdate={emitOrderUpdate}
 			/>
 		</div>
 	)

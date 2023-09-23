@@ -4,21 +4,38 @@ import { useState } from "react"
 
 import { Order } from "@/app/dashboard/DashboardContainer"
 
-import { Input, Select, Option, Button } from "@material-tailwind/react"
+import {
+	Input,
+	Select,
+	Option,
+	Button,
+	Menu,
+	MenuHandler,
+	MenuItem,
+	MenuList,
+} from "@material-tailwind/react"
 
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { AiOutlineCheck } from "react-icons/ai"
-import { MdDeleteOutline } from "react-icons/md"
+import {
+	MdDeleteOutline,
+	MdModeEditOutline,
+	MdOutlineCancel,
+} from "react-icons/md"
 
 import server, { handleResponse } from "@/app/utils/api/server"
 import { useAppSelector } from "@/redux/store"
 import toast from "react-hot-toast"
+import { BiPlus } from "react-icons/bi"
+import DeleteOrderModal from "../../builders/DeleteOrderModal"
 
 interface OrdersTableProps {
 	orders: Order[]
 	newOrder?: boolean
 	toggleNewOrder?: () => void
 	emitOrderCreate?: () => void
+	emitOrderDelete?: () => void
+	emitOrderUpdate?: () => void
 }
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
@@ -26,9 +43,24 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 	newOrder,
 	toggleNewOrder,
 	emitOrderCreate,
+	emitOrderDelete,
+	emitOrderUpdate,
 }) => {
 	// ** Variables
-	const [tempOrder, setTempOrder] = useState<Omit<Order, "status">>()
+	const [tempOrder, setTempOrder] = useState<Omit<Order, "status" | "id">>()
+	const [selectedOrder, setSelectedOrder] = useState<Order>({
+		mobile: "",
+		result_destination: "",
+		status: false,
+		customer_name: "",
+		requester_name: "",
+		result_email: "",
+		id: "",
+	})
+	const [deleteOpen, setDeleteOpen] = useState(false)
+	const [editMode, setEditMode] = useState(false)
+	const [loading, setLoading] = useState(false)
+
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 
 	const heads = [
@@ -38,11 +70,26 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 		"شماره تماس",
 		"ارسال نتیجه",
 		"ایمیل نتیجه",
-		"وضعیت",
 		"اقدامات",
 	]
 
 	// ** Functions
+	const toggleDeleteOpen = () => setDeleteOpen(!deleteOpen)
+	const toggleLoading = () => setLoading(!loading)
+	const toggleEdit = () => setEditMode(!editMode)
+	const selectOrder = (order: Order) => setSelectedOrder(order)
+	const cancelSelectOrder = () => {
+		setSelectedOrder({
+			id: "",
+			mobile: "",
+			result_destination: "",
+			status: false,
+			customer_name: "",
+			requester_name: "",
+			result_email: "",
+		})
+	}
+
 	const handleResultDest = (dest: string): string => {
 		switch (dest) {
 			case "PERSON":
@@ -60,10 +107,6 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 		}
 	}
 
-	const handleOrderStatus = (ready: boolean): string => {
-		return ready ? "تحویل داده شده" : "در حال آماده سازی"
-	}
-
 	const resetTempOrder = () => {
 		setTempOrder({
 			mobile: "",
@@ -72,10 +115,11 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 			requester_name: "",
 			result_email: "",
 		})
-		if (toggleNewOrder) toggleNewOrder()
+		toggleNewOrder?.()
 	}
 
 	const acceptTempOrder = async () => {
+		toggleLoading()
 		await server
 			.post(
 				"/order",
@@ -89,11 +133,38 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 				},
 			)
 			.then(() => {
-				if (emitOrderCreate) emitOrderCreate()
-				if (toggleNewOrder) toggleNewOrder()
-				toast.success("سفارش ایجاد شد. از بخش اقدامات سفارش خود را تکمیل کنید.")
+				emitOrderCreate?.()
+				toggleNewOrder?.()
+				toast.success(
+					"سفارش ایجاد شد. از بخش اقدامات سفارش خود را تکمیل کنید.",
+					{
+						duration: 5000,
+					},
+				)
 			})
 			.catch((err) => handleResponse(err, "toast"))
+			.finally(() => setLoading(false))
+	}
+
+	const acceptEdit = async () => {
+		toggleLoading()
+		await server
+			.put(
+				`/order/${selectedOrder.id}`,
+				{ ...selectedOrder },
+				{
+					headers: {
+						Authorization: `Bearer ${selector.token}`,
+					},
+				},
+			)
+			.then(() => {
+				emitOrderUpdate?.()
+				toggleEdit()
+				toast.success("ویرایش سفارش موفقیت آمیز بود")
+			})
+			.catch((err) => handleResponse(err, "toast"))
+			.finally(() => setLoading(false))
 	}
 
 	return (
@@ -111,46 +182,166 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 					</tr>
 				</thead>
 				<tbody>
-					{orders.map(
-						(
-							{
-								mobile,
-								status,
-								customer_name,
-								requester_name,
-								result_destination,
-								result_email,
-							},
-							index,
-						) => (
-							<tr key={index} className="py-3">
-								<td className="text-center py-3 text-p-black font-normal">
-									{index + 1}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{customer_name}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{requester_name}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{mobile}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{handleResultDest(result_destination)}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{result_email || "ندارد"}
-								</td>
-								<td className="text-center py-3 text-p-black font-normal">
-									{handleOrderStatus(status)}
-								</td>
-								<td className="flex items-center justify-center py-3 text-p-black font-normal">
-									<BsThreeDotsVertical size={20} />
-								</td>
-							</tr>
-						),
-					)}
+					{orders.map((order, index) => (
+						<tr key={index} className="py-3">
+							<td className="text-center py-3 text-p-black font-normal">
+								{index + 1}
+							</td>
+							<td className="text-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<Input
+										type="text"
+										label="نام مشتری"
+										defaultValue={order.customer_name}
+										onChange={(e) =>
+											setSelectedOrder({
+												...selectedOrder!,
+												customer_name: e.target.value,
+											})
+										}
+									/>
+								) : (
+									order.customer_name
+								)}
+							</td>
+							<td className="text-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<Input
+										type="text"
+										label="نام درخواست کننده"
+										defaultValue={order.requester_name}
+										onChange={(e) =>
+											setSelectedOrder({
+												...selectedOrder!,
+												requester_name: e.target.value,
+											})
+										}
+									/>
+								) : (
+									order.requester_name
+								)}
+							</td>
+							<td className="text-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<>
+										<Input
+											type="number"
+											label="موبایل"
+											defaultValue={order.mobile}
+											onChange={(e) =>
+												setSelectedOrder({
+													...selectedOrder!,
+													mobile: e.target.value,
+												})
+											}
+										/>
+									</>
+								) : (
+									<>{order.mobile}</>
+								)}
+							</td>
+							<td className="text-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<>
+										<Select
+											labelProps={{
+												dir: "ltr",
+											}}
+											label={handleResultDest(order.result_destination)}
+											defaultValue={order.result_destination}
+											onChange={(e) =>
+												setSelectedOrder({
+													...selectedOrder!,
+													result_destination: e as string,
+												})
+											}>
+											<Option value="PERSON">حضوری</Option>
+											<Option value="ITTA">ایتا</Option>
+											<Option value="RUBIKA">روبیکا</Option>
+											<Option value="BALE">بله</Option>
+											<Option value="EMAIL">ایمیل</Option>
+										</Select>
+									</>
+								) : (
+									<>{handleResultDest(order.result_destination)}</>
+								)}
+							</td>
+							<td className="text-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<Input
+										type="text"
+										label="ایمیل نتیجه"
+										defaultValue={order?.result_email}
+										onChange={(e) => {
+											setSelectedOrder({
+												...selectedOrder!,
+												result_email: e.target.value,
+											})
+										}}
+										disabled={selectedOrder?.result_destination !== "EMAIL"}
+									/>
+								) : (
+									<>{order.result_email || "ندارد"}</>
+								)}
+							</td>
+							<td className="flex items-center justify-center py-3 text-p-black font-normal">
+								{editMode && selectedOrder.id == order.id ? (
+									<div className="flex items-center gap-2 p-2">
+										<Button
+											color="red"
+											variant="gradient"
+											size="sm"
+											onClick={() => {
+												toggleEdit()
+												cancelSelectOrder()
+											}}>
+											<MdOutlineCancel size={19} />
+										</Button>
+										<Button
+											color="green"
+											variant="gradient"
+											size="sm"
+											disabled={loading}
+											onClick={acceptEdit}>
+											<AiOutlineCheck size={16} />
+										</Button>
+									</div>
+								) : (
+									<Menu placement="right">
+										<MenuHandler>
+											<Button variant="outlined" color="teal" size="sm">
+												<BsThreeDotsVertical size={20} />
+											</Button>
+										</MenuHandler>
+										<MenuList>
+											<MenuItem
+												className="flex justify-between w-full"
+												onClick={() => {
+													selectOrder(order)
+													toggleDeleteOpen()
+												}}>
+												<MdDeleteOutline size={20} />
+												<span className="font-semibold">حذف</span>
+											</MenuItem>
+											<MenuItem
+												className="flex justify-between"
+												onClick={() => {
+													selectOrder(order)
+													toggleEdit()
+												}}>
+												<MdModeEditOutline size={20} />
+												<span className="font-semibold">ویرایش</span>
+											</MenuItem>
+											<MenuItem className="flex justify-between">
+												<BiPlus size={20} />
+												<span className="font-semibold">جزییات سفارش</span>
+											</MenuItem>
+										</MenuList>
+									</Menu>
+								)}
+							</td>
+						</tr>
+					))}
 					{newOrder && (
 						<tr>
 							<td className="text-center">{orders.length + 1}</td>
@@ -227,17 +418,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 									disabled={tempOrder?.result_destination !== "EMAIL"}
 								/>
 							</td>
-							<td>
-								<Input
-									type="text"
-									disabled
-									value={"در حال بررسی"}
-									labelProps={{
-										className: "flex justify-center items-center",
-									}}
-									label="وضعیت"
-								/>
-							</td>
+
 							<td className="flex items-center justify-center gap-4 p-2">
 								<Button
 									color="red"
@@ -250,6 +431,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 									color="green"
 									variant="gradient"
 									size="sm"
+									disabled={loading}
 									onClick={acceptTempOrder}>
 									<AiOutlineCheck size={16} />
 								</Button>
@@ -258,6 +440,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 					)}
 				</tbody>
 			</table>
+			<DeleteOrderModal
+				open={deleteOpen}
+				toggleOpen={toggleDeleteOpen}
+				order={selectedOrder}
+				emitOrderDelete={emitOrderDelete}
+				toggleLoading={toggleLoading}
+				loading={loading}
+			/>
 		</div>
 	)
 }

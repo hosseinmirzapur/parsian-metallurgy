@@ -39,9 +39,17 @@ interface TabProps {
 	orders: Order[]
 	userProfile: Profile
 	emitOrderCreate?: () => void
+	emitOrderDelete?: () => void
+	emitOrderUpdate?: () => void
 }
 
-const Tab: React.FC<TabProps> = ({ orders, userProfile, emitOrderCreate }) => {
+const Tab: React.FC<TabProps> = ({
+	orders,
+	userProfile,
+	emitOrderCreate,
+	emitOrderDelete,
+	emitOrderUpdate,
+}) => {
 	// ** Variables
 	const [newOrder, setNewOrder] = useState(false)
 
@@ -71,6 +79,8 @@ const Tab: React.FC<TabProps> = ({ orders, userProfile, emitOrderCreate }) => {
 									newOrder={newOrder}
 									toggleNewOrder={toggleNewOrder}
 									emitOrderCreate={emitOrderCreate}
+									emitOrderDelete={emitOrderDelete}
+									emitOrderUpdate={emitOrderUpdate}
 								/>
 								<FastAccess toggleNewOrder={toggleNewOrder} />
 							</>

@@ -20,7 +20,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ profile }) => {
 	}) => (
 		<div className="flex flex-row gap-6">
 			<p className="text-p-black font-medium">{label}:</p>
-			<p className="text-p-black">{value}</p>
+			<h4 className="text-p-black">{value}</h4>
 		</div>
 	)
 

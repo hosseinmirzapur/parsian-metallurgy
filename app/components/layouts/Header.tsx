@@ -166,10 +166,12 @@ const Header = () => {
 					<div className="hidden md:block">
 						<Menu placement="bottom">
 							<MenuHandler>
-								<MdOutlineAccountCircle
-									className={"text-p-white " + anchor().styles}
-									size={32}
-								/>
+								<button>
+									<MdOutlineAccountCircle
+										className={"text-p-white " + anchor().styles}
+										size={32}
+									/>
+								</button>
 							</MenuHandler>
 
 							<MenuList
@@ -184,7 +186,7 @@ const Header = () => {
 								<MenuItem
 									className="text-p-white font-semibold"
 									onClick={async () => {
-										await router.push("/")
+										router.push("/")
 										dispatch(logout())
 									}}>
 									خروج
