@@ -22,3 +22,13 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
 	-moz-appearance: textfield;
 }
+
+th,
+td {
+	text-align: center;
+}
+
+td {
+	padding-top: 10;
+	padding-bottom: 10;
+}

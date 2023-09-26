@@ -3,15 +3,23 @@
 // ** react imports
 import { useEffect, useState } from "react"
 
-// ** components
+// ** next imports
+import { useRouter } from "next/navigation"
+
+// ** components imports
 import CreateOrderItemModal from "@/app/components/sections/dashboard/CreateOrderItemModal"
 import DeleteOrderItemModal from "@/app/components/sections/dashboard/DeleteOrderItemModal"
 import OrderDetailCard from "@/app/components/sections/dashboard/OrderDetailCard"
 import OrderItemTable from "@/app/components/sections/dashboard/OrderItemTable"
 import UpdateOrderItemModal from "@/app/components/sections/dashboard/UpdateOrderItemModal"
 
+// ** 3rd-party libraries
+import toast from "react-hot-toast"
+
 // ** server utilities
 import server, { handleResponse } from "@/app/utils/api/server"
+
+// ** redux imports
 import { useAppSelector } from "@/redux/store"
 
 interface OrderPageParams {
@@ -26,11 +34,12 @@ export interface SingleOrder {
 	result_destination: "PERSON" | "ITTA" | "RUBIKA" | "BALE" | "EMAIL" | string
 	result_email?: string
 	special_id: string
-	orderItems: OrderItem[]
+	order_items: OrderItem[]
 	created_at: string
 }
 
 export interface OrderItem {
+	id: string | number
 	name: string
 	sand_paper: boolean
 	destruction: boolean
@@ -43,6 +52,9 @@ export interface OrderItem {
 }
 
 const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
+	// ** standard variables
+	const router = useRouter()
+
 	// ** redux variables
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 
@@ -52,7 +64,7 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 		customer_name: "",
 		created_at: "",
 		mobile: "",
-		orderItems: [],
+		order_items: [],
 		result_destination: "",
 		special_id: "",
 		requester_name: "",
@@ -60,6 +72,7 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 	}
 	const [order, setOrder] = useState<SingleOrder>(baseOrder)
 	const [selectedOrderItem, setSelectedOrderItem] = useState<OrderItem>({
+		id: "",
 		created_at: "",
 		destruction: false,
 		name: "",
@@ -87,7 +100,17 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 	const toggleUpdateModal = () => setUpdateModal(!updateModal)
 	const toggleDeleteModal = () => setDeleteModal(!deleteModal)
 
+	// ** middleware
+	const authorize = () => {
+		if (!selector.loggedIn) {
+			toast.error("شما اجازه دسترسی به این صفحه را ندارید")
+			router.push("/")
+			return
+		}
+	}
+
 	useEffect(() => {
+		authorize()
 		server
 			.get(`/order/${orderID}`, {
 				headers: {
@@ -104,11 +127,11 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 	return (
 		<div
 			dir="rtl"
-			className="flex flex-col gap-5 w-11/12 md:w-10/12 mx-auto py-10">
-			<OrderDetailCard order={order} />
+			className="flex flex-col gap-3 w-11/12 md:w-10/12 mx-auto py-10">
+			<OrderDetailCard order={order} toggleCreate={toggleCreateModal} />
 
 			<OrderItemTable
-				orderItems={order.orderItems}
+				orderItems={order.order_items}
 				toggleDelete={toggleDeleteModal}
 				toggleUpdate={toggleUpdateModal}
 				chooseOrderItem={chooseOrderItem}

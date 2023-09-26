@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 
+import { useRouter } from "next/navigation"
+
 import { Order } from "@/app/dashboard/DashboardContainer"
 
 import {
@@ -60,6 +62,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 	const [deleteOpen, setDeleteOpen] = useState(false)
 	const [editMode, setEditMode] = useState(false)
 	const [loading, setLoading] = useState(false)
+
+	const router = useRouter()
 
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 
@@ -165,6 +169,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 			})
 			.catch((err) => handleResponse(err, "toast"))
 			.finally(() => setLoading(false))
+	}
+
+	const navigateToOrderDetail = (orderID: number) => {
+		router.push(`/dashboard/orders/${orderID}`)
 	}
 
 	return (
@@ -332,7 +340,11 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 												<MdModeEditOutline size={20} />
 												<span className="font-semibold">ویرایش</span>
 											</MenuItem>
-											<MenuItem className="flex justify-between">
+											<MenuItem
+												className="flex justify-between"
+												onClick={() => {
+													navigateToOrderDetail(order.id as number)
+												}}>
 												<BiPlus size={20} />
 												<span className="font-semibold">جزییات سفارش</span>
 											</MenuItem>
