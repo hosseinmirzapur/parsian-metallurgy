@@ -93,7 +93,8 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 
 	// ** functions
 	const fireEvent = () => setFired(!fired)
-	const toggleLoading = () => setLoading(!loading)
+	const cancelLoading = () => setLoading(false)
+	const enableLoading = () => setLoading(true)
 	const chooseOrderItem = (orderItem: OrderItem) =>
 		setSelectedOrderItem(orderItem)
 	const toggleCreateModal = () => setCreateModal(!createModal)
@@ -142,7 +143,9 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 				open={createModal}
 				toggleOpen={toggleCreateModal}
 				loading={loading}
-				toggleLoading={toggleLoading}
+				enableLoading={enableLoading}
+				cancelLoading={cancelLoading}
+				orderID={order.id}
 			/>
 
 			<UpdateOrderItemModal
@@ -151,7 +154,8 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 				open={updateModal}
 				toggleOpen={toggleUpdateModal}
 				loading={loading}
-				toggleLoading={toggleLoading}
+				enableLoading={enableLoading}
+				cancelLoading={cancelLoading}
 			/>
 
 			<DeleteOrderItemModal
@@ -160,7 +164,8 @@ const OrderPageContainer: React.FC<OrderPageParams> = ({ orderID }) => {
 				open={deleteModal}
 				toggleOpen={toggleDeleteModal}
 				loading={loading}
-				toggleLoading={toggleLoading}
+				enableLoading={enableLoading}
+				cancelLoading={cancelLoading}
 			/>
 		</div>
 	)

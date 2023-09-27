@@ -18,7 +18,8 @@ interface DeleteOrderItemModalProps {
 	open: boolean
 	toggleOpen: () => void
 	loading: boolean
-	toggleLoading: () => void
+	enableLoading: () => void
+	cancelLoading: () => void
 }
 
 const DeleteOrderItemModal: React.FC<DeleteOrderItemModalProps> = ({
@@ -26,7 +27,8 @@ const DeleteOrderItemModal: React.FC<DeleteOrderItemModalProps> = ({
 	loading,
 	open,
 	orderItem,
-	toggleLoading,
+	cancelLoading,
+	enableLoading,
 	toggleOpen,
 }) => {
 	// ** variables
@@ -34,7 +36,7 @@ const DeleteOrderItemModal: React.FC<DeleteOrderItemModalProps> = ({
 
 	// ** functions
 	const handleDelete = async () => {
-		toggleLoading()
+		enableLoading()
 		await server
 			.delete(`/order-item/${orderItem.id}`, {
 				headers: {
@@ -42,11 +44,11 @@ const DeleteOrderItemModal: React.FC<DeleteOrderItemModalProps> = ({
 				},
 			})
 			.then(() => {
-				toggleLoading()
 				toggleOpen()
 				listener()
 			})
 			.catch((err) => handleResponse(err, "toast"))
+			.finally(() => cancelLoading())
 	}
 
 	return (

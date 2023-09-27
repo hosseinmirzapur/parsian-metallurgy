@@ -122,8 +122,8 @@ const OrderItemTable: React.FC<OrderItemTableProps> = ({
 									{handleOrderItemStatus(item.status)}
 								</td>
 								<td className="py-4 justify-center text-p-black font-normal text-sm">
-									<div className="flex items-center justify-center">
-										<Popover placement="bottom">
+									<div className="flex items-center justify-center px-3">
+										<Popover placement="top">
 											<PopoverHandler>
 												<Button
 													color="blue-gray"
@@ -134,7 +134,9 @@ const OrderItemTable: React.FC<OrderItemTableProps> = ({
 													مشاهده
 												</Button>
 											</PopoverHandler>
-											<PopoverContent className="text-p-white text-base bg-p-black">
+											<PopoverContent
+												className="text-p-white text-base bg-p-black text-start"
+												dir="rtl">
 												{item.description
 													? item.description
 													: "توضیحاتی درج نشده است"}
@@ -168,7 +170,7 @@ const OrderItemTable: React.FC<OrderItemTableProps> = ({
 										</MenuHandler>
 										<MenuList>
 											<MenuItem
-												className="flex justify-between w-full mx-auto"
+												className="flex justify-between w-full mx-auto font-medium"
 												onClick={() => {
 													chooseOrderItem(item)
 													toggleUpdate()
@@ -177,7 +179,7 @@ const OrderItemTable: React.FC<OrderItemTableProps> = ({
 												ویرایش
 											</MenuItem>
 											<MenuItem
-												className="flex justify-between w-full mx-auto"
+												className="flex justify-between w-full mx-auto font-medium"
 												onClick={() => {
 													chooseOrderItem(item)
 													toggleDelete()
