@@ -50,6 +50,7 @@ const DashboardContainer = () => {
 	const emitOrderCreate = () => setFired(!fired)
 	const emitOrderDelete = () => setFired(!fired)
 	const emitOrderUpdate = () => setFired(!fired)
+	const changedEvent = () => setFired(!fired)
 
 	const authorize = () => {
 		if (!selector.loggedIn) {
@@ -86,7 +87,7 @@ const DashboardContainer = () => {
 				fillProfile(fillable)
 			})
 			.catch((err) => handleResponse(err, "toast"))
-	}, [])
+	}, [fired])
 
 	return (
 		<div dir="rtl" className="mt-5 pb-48 md:px-10">
@@ -96,6 +97,7 @@ const DashboardContainer = () => {
 				emitOrderCreate={emitOrderCreate}
 				emitOrderDelete={emitOrderDelete}
 				emitOrderUpdate={emitOrderUpdate}
+				changedEvent={changedEvent}
 			/>
 		</div>
 	)

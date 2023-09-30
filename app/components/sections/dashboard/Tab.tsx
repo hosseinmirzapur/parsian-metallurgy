@@ -41,6 +41,7 @@ interface TabProps {
 	emitOrderCreate?: () => void
 	emitOrderDelete?: () => void
 	emitOrderUpdate?: () => void
+	changedEvent: () => void
 }
 
 const Tab: React.FC<TabProps> = ({
@@ -49,6 +50,7 @@ const Tab: React.FC<TabProps> = ({
 	emitOrderCreate,
 	emitOrderDelete,
 	emitOrderUpdate,
+	changedEvent,
 }) => {
 	// ** Variables
 	const [newOrder, setNewOrder] = useState(false)
@@ -87,7 +89,11 @@ const Tab: React.FC<TabProps> = ({
 						)}
 
 						{value === "profile" && (
-							<UserProfile profile={userProfile} key={index} />
+							<UserProfile
+								profile={userProfile}
+								key={index}
+								changedEvent={changedEvent}
+							/>
 						)}
 					</TabPanel>
 				))}

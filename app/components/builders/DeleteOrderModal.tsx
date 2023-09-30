@@ -20,7 +20,8 @@ interface DeleteOrderModalProps {
 	toggleOpen: () => void
 	emitOrderDelete?: () => void
 	loading: boolean
-	toggleLoading: () => void
+	enableLoading: () => void
+	disableLoading: () => void
 }
 
 const DeleteOrderModal: React.FC<DeleteOrderModalProps> = ({
@@ -29,14 +30,15 @@ const DeleteOrderModal: React.FC<DeleteOrderModalProps> = ({
 	toggleOpen,
 	emitOrderDelete,
 	loading,
-	toggleLoading,
+	disableLoading,
+	enableLoading,
 }) => {
 	// ** Variables
 	const selector = useAppSelector((state) => state.persistedReducer.value)
 
 	// ** Functions
 	const handleDelete = async () => {
-		toggleLoading()
+		enableLoading()
 		await server
 			.delete(`/order/${order.id}`, {
 				headers: {
@@ -47,9 +49,12 @@ const DeleteOrderModal: React.FC<DeleteOrderModalProps> = ({
 				toggleOpen()
 				emitOrderDelete?.()
 				toast.success("سفارش مورد نظر با موفقیت حذف شد.")
+				disableLoading()
 			})
-			.catch((err) => handleResponse(err, "toast"))
-			.finally(toggleLoading)
+			.catch((err) => {
+				handleResponse(err, "toast")
+				disableLoading()
+			})
 	}
 
 	return (

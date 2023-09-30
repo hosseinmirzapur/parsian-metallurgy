@@ -1,22 +1,77 @@
 "use client"
 
+import { useState } from "react"
+
 import { Profile } from "@/app/dashboard/DashboardContainer"
-import { Badge, Card, CardBody, CardHeader } from "@material-tailwind/react"
+
+import {
+	Badge,
+	Card,
+	CardBody,
+	CardHeader,
+	Input,
+	Tooltip,
+} from "@material-tailwind/react"
 
 import { GrUserManager } from "react-icons/gr"
 
+import server, { handleResponse } from "@/app/utils/api/server"
+import { useAppSelector } from "@/redux/store"
+import toast from "react-hot-toast"
+
 interface UserProfileProps {
 	profile: Profile
+	changedEvent: () => void
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ profile }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ profile, changedEvent }) => {
+	// ** variables
+	const [editMode, setEditMode] = useState(false)
+	const [name, setName] = useState("")
+	const [loading, setLoading] = useState(false)
+
+	// ** redux variables
+	const selector = useAppSelector((select) => select.persistedReducer.value)
+
+	// ** functions
+	const toggleEdit = () => setEditMode(!editMode)
+	const fillName = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setName(e.target.value)
+
+	// ** server functions
+	const handleEdit = async () => {
+		if (name !== "") {
+			setLoading(true)
+			await server
+				.put(
+					"/user/edit-name",
+					{ name },
+					{
+						headers: {
+							Authorization: `Bearer ${selector.token}`,
+						},
+					},
+				)
+				.then(() => {
+					changedEvent()
+					setName("")
+					toast.success("ویرایش موفقیت آمیز بود")
+					setLoading(false)
+				})
+				.catch((err) => {
+					handleResponse(err, "toast")
+					setLoading(false)
+				})
+		}
+	}
+
 	// minimal component
 	const TextComponent = ({
 		label,
 		value,
 	}: {
 		label: string
-		value: string | number | React.ReactNode
+		value: string | number | any
 	}) => (
 		<div className="flex flex-row gap-6">
 			<p className="text-p-black font-medium">{label}:</p>
@@ -46,7 +101,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ profile }) => {
 				lg:w-8/12
 				mx-auto
 			">
-			<Card className="mt-10">
+			<Card className="mt-10 cursor-pointer">
 				<CardHeader
 					className={`
 						flex
@@ -60,16 +115,44 @@ const UserProfile: React.FC<UserProfileProps> = ({ profile }) => {
 					`}>
 					<GrUserManager size={50} className="p-2" />
 				</CardHeader>
-				<CardBody className="grid grid-cols-1 md:grid-cols-2 gap-4 hover:shadow-xl ease-in-out duration-300">
-					<TextComponent label="نام" value={profile.name} />
-					<TextComponent label="موبایل" value={profile.mobile} />
-					<TextComponent label="تاریخ ثبت نام" value={profile.registered_at} />
-					<TextComponent label="تعداد سفارشات" value={profile.orders_count} />
-					<TextComponent
-						label="وضعیت کاربر"
-						value={handleUserStatus(profile.status)}
-					/>
-				</CardBody>
+				<Tooltip
+					content={
+						editMode
+							? "برای خروج از حالت ویرایش کلیک کنید"
+							: "برای ویرایش کلیک کنید"
+					}
+					placement="bottom">
+					<CardBody
+						className="grid grid-cols-1 md:grid-cols-2 gap-4 hover:shadow-xl ease-in-out duration-300"
+						onClick={() => {
+							if (loading) return
+							if (editMode) {
+								handleEdit()
+							}
+							toggleEdit()
+						}}>
+						{editMode ? (
+							<Input
+								label="نام"
+								defaultValue={profile.name}
+								onChange={fillName}
+								autoFocus={editMode}
+							/>
+						) : (
+							<TextComponent label="نام" value={profile.name} />
+						)}
+						<TextComponent label="موبایل" value={profile.mobile} />
+						<TextComponent
+							label="تاریخ ثبت نام"
+							value={profile.registered_at}
+						/>
+						<TextComponent label="تعداد سفارشات" value={profile.orders_count} />
+						<TextComponent
+							label="وضعیت کاربر"
+							value={handleUserStatus(profile.status)}
+						/>
+					</CardBody>
+				</Tooltip>
 			</Card>
 		</div>
 	)

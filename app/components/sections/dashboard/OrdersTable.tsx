@@ -79,7 +79,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
 	// ** Functions
 	const toggleDeleteOpen = () => setDeleteOpen(!deleteOpen)
-	const toggleLoading = () => setLoading(!loading)
+	const enableLoading = () => setLoading(true)
+	const disableLoading = () => setLoading(false)
 	const toggleEdit = () => setEditMode(!editMode)
 	const selectOrder = (order: Order) => setSelectedOrder(order)
 	const cancelSelectOrder = () => {
@@ -123,7 +124,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 	}
 
 	const acceptTempOrder = async () => {
-		toggleLoading()
+		enableLoading()
 		await server
 			.post(
 				"/order",
@@ -145,13 +146,16 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 						duration: 5000,
 					},
 				)
+				disableLoading()
 			})
-			.catch((err) => handleResponse(err, "toast"))
-			.finally(() => setLoading(false))
+			.catch((err) => {
+				handleResponse(err, "toast")
+				disableLoading()
+			})
 	}
 
 	const acceptEdit = async () => {
-		toggleLoading()
+		enableLoading()
 		await server
 			.put(
 				`/order/${selectedOrder.id}`,
@@ -166,9 +170,12 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 				emitOrderUpdate?.()
 				toggleEdit()
 				toast.success("ویرایش سفارش موفقیت آمیز بود")
+				disableLoading()
 			})
-			.catch((err) => handleResponse(err, "toast"))
-			.finally(() => setLoading(false))
+			.catch((err) => {
+				handleResponse(err, "toast")
+				disableLoading()
+			})
 	}
 
 	const navigateToOrderDetail = (orderID: number) => {
@@ -396,7 +403,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 									}}
 								/>
 							</td>
-							<td>
+							<td className="text-center py-32 md:py-3 text-p-black font-normal">
 								<Select
 									labelProps={{
 										dir: "ltr",
@@ -431,7 +438,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 								/>
 							</td>
 
-							<td className="flex items-center justify-center gap-4 p-2">
+							<td className="flex items-center justify-center gap-4 px-2 py-32 md:py-5">
 								<Button
 									color="red"
 									variant="gradient"
@@ -457,7 +464,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 				toggleOpen={toggleDeleteOpen}
 				order={selectedOrder}
 				emitOrderDelete={emitOrderDelete}
-				toggleLoading={toggleLoading}
+				enableLoading={enableLoading}
+				disableLoading={disableLoading}
 				loading={loading}
 			/>
 		</div>

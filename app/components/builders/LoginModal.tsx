@@ -23,6 +23,7 @@ import server, { handleResponse } from "@/app/utils/api/server"
 import { login } from "@/redux/features/auth-slice"
 import { AppDispatch } from "@/redux/store"
 import { useDispatch } from "react-redux"
+import toast from "react-hot-toast"
 
 interface LoginModalProps {
 	isOpen: boolean
@@ -86,6 +87,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
 				const token: string = res.data.token
 				dispatch(login(token))
 				toggleModal()
+				toast.success("شما با موفقیت وارد شدید")
 			})
 			.catch((err) => {
 				let errText: string = handleResponse(err, "text")

@@ -53,8 +53,18 @@ const CreateOrderItemModal: React.FC<CreateOrderItemModalProps> = ({
 	orderID,
 }) => {
 	// ** variables
-	const [orderItem, setOrderItem] = useState<OrderItemCreateSchema>()
-	const [image, setImage] = useState<File>()
+	const baseOrderItem: OrderItemCreateSchema = {
+		destruction: false,
+		name: "",
+		order_id: "",
+		quantity: 0,
+		sand_paper: false,
+		test_type: "ANALYZE",
+		description: "",
+	}
+	const [orderItem, setOrderItem] =
+		useState<OrderItemCreateSchema>(baseOrderItem)
+	const [image, setImage] = useState<File | null>()
 	const [imagePreview, setImagePreview] = useState<string>()
 	const [error, setError] = useState("")
 	const [alertOpen, setAlertOpen] = useState(true)
@@ -78,8 +88,8 @@ const CreateOrderItemModal: React.FC<CreateOrderItemModalProps> = ({
 	}
 
 	const clearAllInputs = () => {
-		setOrderItem(undefined)
-		setImage(undefined)
+		setOrderItem(baseOrderItem)
+		setImage(null)
 		setImagePreview("")
 		setError("")
 	}

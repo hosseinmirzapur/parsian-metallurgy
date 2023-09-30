@@ -16,10 +16,14 @@ import {
 // react icons
 import { IoCloseOutline } from "react-icons/io5"
 
+// server utils
 import server, { handleResponse } from "@/app/utils/api/server"
+
+// ** third party
 import toast from "react-hot-toast"
 
-// server utils
+// @ts-ignore
+import persianJs from "persianjs"
 
 interface RegisterModalProps {
 	isOpen: boolean
@@ -39,7 +43,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 	const [name, setName] = useState("")
 	const [errMsg, setErrMsg] = useState("")
 	const [loading, setLoading] = useState(false)
-
 	// ** Functions
 	const fillMobile = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setMobile(e.target.value)
@@ -61,6 +64,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 		}
 
 		let regex = new RegExp("^(\\+98|0)?9\\d{9}$")
+		setMobile(persianJs(mobile).toEnglishNumber())
 
 		if (!regex.test(mobile)) {
 			setErrMsg("شماره موبایل نامعتبر است")
@@ -94,7 +98,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 			.post("/user/register", { mobile, password, name })
 			.then(() => {
 				toggleModal()
-				toast("ثبت نام شما موفقیت آمیز بود، اکنون میتوانید وارد شوید")
+				toast.success("ثبت نام شما موفقیت آمیز بود، اکنون میتوانید وارد شوید")
 			})
 			.catch((err) => {
 				let errText: string = handleResponse(err, "text")
